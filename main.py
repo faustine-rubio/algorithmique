@@ -1,6 +1,20 @@
 import tkinter as tk
 from tkinter import ttk
 
+from vocab.add_word import open_add_word
+from vocab.edit_word import open_edit_word
+from vocab.delete_word import open_delete_word
+from vocab.display_vocab import open_display_vocab
+
+from games.quiz import open_quiz
+from games.hangman import open_hangman
+from games.reverse_translation import open_reverse_translation
+from games.reading_comprehension import open_reading_comprehension
+from games.memory_game import open_memory_game
+
+from training.training_mode import open_training_mode
+from scores.scores import open_scores
+
 # ==========================
 # Fenêtre principale
 # ==========================
@@ -66,32 +80,32 @@ ttk.Button(
     vocab_frame,
     text="Display Vocabulary",
     style="Menu.TButton",
-    command=lambda: None
+    command=open_display_vocab
 ).pack(fill="x", pady=5)
 
 ttk.Button(
     vocab_frame,
     text="Add Word",
     style="Menu.TButton",
-    command=lambda: None
+    command=open_add_word
 ).pack(fill="x", pady=5)
 
 ttk.Button(
     vocab_frame,
     text="Modify Word",
     style="Menu.TButton",
-    command=lambda: None
+    command=open_edit_word
 ).pack(fill="x", pady=5)
 
 ttk.Button(
     vocab_frame,
     text="Delete Word",
     style="Menu.TButton",
-    command=lambda: None
+    command=open_delete_word
 ).pack(fill="x", pady=5)
 
 # ==========================
-# Jeux
+# Jeux éducatifs
 # ==========================
 games_frame = tk.LabelFrame(
     main_frame,
@@ -107,35 +121,35 @@ ttk.Button(
     games_frame,
     text="Translation Quiz",
     style="Menu.TButton",
-    command=lambda: None
+    command=open_quiz
 ).pack(fill="x", pady=5)
 
 ttk.Button(
     games_frame,
     text="Hangman",
     style="Menu.TButton",
-    command=lambda: None
+    command=open_hangman
 ).pack(fill="x", pady=5)
 
 ttk.Button(
     games_frame,
     text="Reverse Translation",
     style="Menu.TButton",
-    command=lambda: None
+    command=open_reverse_translation
 ).pack(fill="x", pady=5)
 
 ttk.Button(
     games_frame,
     text="Reading Comprehension",
     style="Menu.TButton",
-    command=lambda: None
+    command=open_reading_comprehension
 ).pack(fill="x", pady=5)
 
 ttk.Button(
     games_frame,
     text="Memory Game",
     style="Menu.TButton",
-    command=lambda: None
+    command=open_memory_game
 ).pack(fill="x", pady=5)
 
 # ==========================
@@ -151,13 +165,29 @@ progress_frame = tk.LabelFrame(
 )
 progress_frame.pack(fill="x", padx=40, pady=10)
 
-progress_label = tk.Label(
+tk.Label(
     progress_frame,
-    text="No score available yet",
+    text="Training and scores",
     font=("Arial", 11),
     bg="white"
-)
-progress_label.pack()
+).pack(pady=(0, 10))
+
+buttons_frame = tk.Frame(progress_frame, bg="white")
+buttons_frame.pack()
+
+ttk.Button(
+    buttons_frame,
+    text="Training Mode",
+    style="Menu.TButton",
+    command=open_training_mode
+).pack(side="left", padx=10)
+
+ttk.Button(
+    buttons_frame,
+    text="Scores",
+    style="Menu.TButton",
+    command=open_scores
+).pack(side="left", padx=10)
 
 # ==========================
 # Bouton quitter
