@@ -1,10 +1,12 @@
-Salut !;Hi!;;basic, communication
-Bonjour !;Hello!;;basic, communication
-Au revoir !;Goodbye! / Bye!;;basic, communication
-Merci !;Thank you!;;basic, communication
-S'il vous plaît ! / S'il te plaît !;Please!;;basic, communication
-Pardon !;Sorry!;;basic, communication
-Arrête !;Stop!;;basic, communication
-Attention !;Caution!;;basic, communication
+Salut;Hi;;basic, communication
+Bonjour;Hello;;basic, communication
+Au revoir;Bye;;basic, communication
+Au revoir;Goodbye;;basic, communication
+Merci;Thank you;;basic, communication
+S'il te plaît;Please;;basic, communication
+S'il vous plaît;Please;;basic, communication
+Pardon;Sorry;;basic, communication
+Arrête;Stop;;basic, communication
+Attention;Caution;;basic, communication
 oui;yes;;basic, communication
 non;no;;basic, communication

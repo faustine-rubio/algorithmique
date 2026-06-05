@@ -2,38 +2,55 @@
 
 import csv
 import os
-from vocab_data import vocab
+from data.vocab_data import vocab
 
-CSV_FILES = [
-    "en-fr_adjective.csv",
-    "en-fr_color.csv",
-    "en-fr_communication.csv",
-    "en-fr_food.csv",
-    "en-fr_health.csv",
-    "en-fr_numbers.csv",
-    "en-fr_orientation.csv",
-    "en-fr_personal-information.csv",
-    "en-fr_sentences.csv",
-    "en-fr_shopping.csv",
-    "en-fr_surrounding.csv",
-    "en-fr_technology.csv",
-    "en-fr_time.csv",
-    "en-fr_transport.csv",
-    "en-fr_verb.csv",
-]
+# CSV_FILES will be discovered dynamically from the data folder at runtime
 
 def load_all_vocab():
-    folder = "data"
+    # utiliser le dossier du module pour trouver les CSV
+    folder = os.path.dirname(__file__)
+
+    try:
+        CSV_FILES = [f for f in os.listdir(folder) if f.lower().endswith('.csv')]
+    except Exception:
+        CSV_FILES = []
 
     for file in CSV_FILES:
         path = os.path.join(folder, file)
 
         with open(path, newline="", encoding="utf-8") as f:
-            reader = csv.reader(f)
+            # CSV uses semicolon as separator and rows look like:
+            # french;english;;level, category  e.g. bon(ne);good;;basic, adjective
+            reader = csv.reader(f, delimiter=';')
 
             for row in reader:
-                if len(row) == 2:
-                    english = row[0].strip()
-                    french = row[1].strip()
+                # need at least french and english
+                if len(row) >= 2:
+                    french = row[0].strip()
+                    english = row[1].strip()
 
-                    vocab[english] = french
+                    # fallback category derived from filename
+                    category = os.path.splitext(file)[0].replace("en-fr_", "")
+                    level = "basic"
+
+                    # metadata may be in column 3 or 4 depending on file
+                    meta = None
+                    if len(row) >= 4 and row[3].strip():
+                        meta = row[3].strip()
+                    elif len(row) >= 3 and row[2].strip():
+                        meta = row[2].strip()
+
+                    if meta:
+                        parts = [p.strip() for p in meta.split(',') if p.strip()]
+                        if len(parts) >= 2:
+                            # format: level, category
+                            level = parts[0]
+                            category = parts[1]
+                        elif len(parts) == 1:
+                            p = parts[0].lower()
+                            if p in ("basic", "intermediate", "advanced"):
+                                level = parts[0]
+                            else:
+                                category = parts[0]
+
+                    vocab[french] = [english, category, level]

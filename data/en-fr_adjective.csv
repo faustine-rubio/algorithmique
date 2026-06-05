@@ -1,16 +1,27 @@
-bon(ne);good;;basic, adjective
-mauvais(e);bad;;basic, adjective
-nouveau/nouvelle;new;;basic, adjective
-vieux/vieille;old;;basic, adjective
+bonne;good;;basic, adjective
+bon;good;;basic, adjective
+mauvais;bad;;basic, adjective
+mauvaise;bad;;basic, adjective
+nouveau;new;;basic, adjective
+nouvelle;new;;basic, adjective
+vieille;old;;basic, adjective
+vieux;old;;basic, adjective
 jeune;young;;basic, adjective
-grand(e);big;;basic, adjective
-petit(e);small;;basic, adjective
-beau/belle;beautiful;;basic, adjective
-pas cher/chère;cheap;;basic, adjective
-cher/chère;expensive;;basic, adjective
+grand;big;;basic, adjective
+grande;big;;basic, adjective
+petit;small;;basic, adjective
+petite;small;;basic, adjective
+beau;beautiful;;basic, adjective
+belle;beautiful;;basic, adjective
+pas cher;cheap;;basic, adjective
+pas chère;cheap;;basic, adjective
 sombre;dark;;basic, adjective
-clair(e);bright;;basic, adjective
+claire;bright;;basic, adjective
+clair;bright;;basic, adjective
 ensemble;together;;basic, adjective
-séparé(e);separate;;basic, adjective
-important(e);important;;basic, adjective
-fatigué(e);tired;;basic, adjective
+séparé;separate;;basic, adjective
+séparée;separate;;basic, adjective
+important;important;;basic, adjective
+importante;important;;basic, adjective
+fatigué;tired;;basic, adjective
+fatiguée;tired;;basic, adjective
