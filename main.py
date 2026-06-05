@@ -15,7 +15,7 @@ from games.memory_game import open_memory_game
 from training.training_mode import open_training_mode
 from scores.scores import open_scores
 
-from data.vocab_loader import load_all_vocab
+from data.data_creation import load_all_vocab
 load_all_vocab()
 
 # ==========================

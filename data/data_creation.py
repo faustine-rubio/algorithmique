@@ -1,8 +1,10 @@
-# data/vocab_loader.py
+# data/data_creation.py
 
 import csv
 import os
-from data.vocab_data import vocab
+
+global vocab
+vocab = {}
 
 CSV_FILES = [
     "en-fr_adjective.csv",
@@ -29,12 +31,11 @@ def load_all_vocab():
         path = os.path.join(folder, file)
 
         with open(path, newline="", encoding="utf-8") as f:
-            # CSV uses semicolon as separator and rows look like:
+            # CSV uses semicolon as separator; rows look like:
             # french;english;;level, category  e.g. bon(ne);good;;basic, adjective
             reader = csv.reader(f, delimiter=';')
 
             for row in reader:
-                # need at least french and english
                 if len(row) >= 2:
                     french = row[0].strip()
                     english = row[1].strip()
@@ -43,24 +44,15 @@ def load_all_vocab():
                     category = os.path.splitext(file)[0].replace("en-fr_", "")
                     level = "basic"
 
-                    # metadata may be in column 3 or 4 depending on file
+                    # metadata column may be column 3 or 4
                     meta = None
                     if len(row) >= 4 and row[3].strip():
                         meta = row[3].strip()
                     elif len(row) >= 3 and row[2].strip():
                         meta = row[2].strip()
 
-                    if meta:
-                        parts = [p.strip() for p in meta.split(',') if p.strip()]
-                        if len(parts) >= 2:
-                            # format: level, category
-                            level = parts[0]
-                            category = parts[1]
-                        elif len(parts) == 1:
-                            p = parts[0].lower()
-                            if p in ("basic", "intermediate", "advanced"):
-                                level = parts[0]
-                            else:
-                                category = parts[0]
+                    vocab[french] = [english, category]
 
-                    vocab[french] = [english, category, level]
+load_all_vocab()
+print()
+print(vocab)
