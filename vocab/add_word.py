@@ -3,7 +3,7 @@ from tkinter import ttk
 import os
 import tkinter.messagebox as messagebox
 
-from data.data_creation import vocab
+from data.vocab_data import vocab, save_word_to_csv
 
 
 def open_add_word():
@@ -77,14 +77,10 @@ def open_add_word():
 
             csv_path = os.path.join(csv_folder, f"en-fr_{cat_slug}.csv")
 
-            # write row as: french;english;;level, category
-            import csv as _csv
-            with open(csv_path, 'a', newline='', encoding='utf-8') as cf:
-                writer = _csv.writer(cf, delimiter=';')
-                meta = f"{level}, {category}"
-                writer.writerow([french, english, '', meta])
 
-            messagebox.showinfo("Succès", f"Le mot '{french}' a été ajouté et enregistré dans {os.path.basename(csv_path)}.")
+            # Persister via helper centralisé
+            save_word_to_csv(french, english, category, level)
+            messagebox.showinfo("Succès", f"Le mot '{french}' a été ajouté et enregistré.")
 
             # effacer les champs
             entry_french.delete(0, "end")
@@ -98,8 +94,8 @@ def open_add_word():
     bottom_frame = tk.Frame(window)
     bottom_frame.pack(fill="x", pady=10)
 
-    validate_button = ttk.Button(bottom_frame, text="Valider", command=on_validate)
-    validate_button.pack(side="right", padx=10)
-
     quit_button = ttk.Button(bottom_frame, text="Quitter", command=window.destroy)
-    quit_button.pack(side="right")
+    quit_button.pack(side="right", padx=10, pady=5)
+
+    validate_button = ttk.Button(bottom_frame, text="Valider", command=on_validate)
+    validate_button.pack(side="right", padx=10, pady=5)

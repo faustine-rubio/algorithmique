@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-from data.data_creation import vocab
+from data.vocab_data import vocab
 
 def open_display_vocab():
     window = tk.Toplevel()

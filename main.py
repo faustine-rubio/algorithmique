@@ -15,7 +15,7 @@ from games.memory_game import open_memory_game
 from training.training_mode import open_training_mode
 from scores.scores import open_scores
 
-from data.data_creation import load_all_vocab
+from data.vocab_data import load_all_vocab
 load_all_vocab()
 
 # ==========================
@@ -193,15 +193,18 @@ ttk.Button(
 ).pack(side="left", padx=10)
 
 # ==========================
-# Bouton quitter
+# Bouton quitter (bas droite)
 # ==========================
+bottom_quit_frame = tk.Frame(root, bg="#F5F7FA")
+bottom_quit_frame.pack(fill="x", side="bottom", pady=12, padx=20)
+
 quit_button = ttk.Button(
-    root,
-    text="Quit",
+    bottom_quit_frame,
+    text="Quitter",
     style="Menu.TButton",
     command=root.destroy
 )
-quit_button.pack(pady=20)
+quit_button.pack(side="right")
 
 # ==========================
 # Lancement
