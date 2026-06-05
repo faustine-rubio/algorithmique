@@ -1,0 +1,11 @@
+prénom;first name;;basic, personal-information
+nom de famille;last name;;basic, personal-information
+adresse;address;;basic, personal-information
+pays;country;;basic, personal-information
+lieu de naissance;place of birth;;basic, personal-information
+date de naissance;date of birth;;basic, personal-information
+profession;profession, job;;basic, personal-information
+homme;man;;basic, personal-information
+femme;woman;;basic, personal-information
+adulte;adult;;basic, personal-information
+enfant;child;;basic, personal-information
