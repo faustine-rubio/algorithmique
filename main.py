@@ -147,6 +147,13 @@ ttk.Button(
     command=open_memory_game
 ).pack(fill="x", pady=5)
 
+ttk.Button(
+    games_frame,
+    text="Training Mode",
+    style="Menu.TButton",
+    command=open_training_mode
+).pack(fill="x", pady=5)
+
 # ==========================
 # Bouton quitter (bas droite)
 # ==========================
