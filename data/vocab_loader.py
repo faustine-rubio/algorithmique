@@ -4,26 +4,16 @@ import csv
 import os
 from data.vocab_data import vocab
 
-CSV_FILES = [
-    "en-fr_adjective.csv",
-    "en-fr_color.csv",
-    "en-fr_communication.csv",
-    "en-fr_food.csv",
-    "en-fr_health.csv",
-    "en-fr_numbers.csv",
-    "en-fr_orientation.csv",
-    "en-fr_personal-information.csv",
-    "en-fr_sentences.csv",
-    "en-fr_shopping.csv",
-    "en-fr_surrounding.csv",
-    "en-fr_technology.csv",
-    "en-fr_time.csv",
-    "en-fr_transport.csv",
-    "en-fr_verb.csv"
-]
+# CSV_FILES will be discovered dynamically from the data folder at runtime
 
 def load_all_vocab():
-    folder = "data"
+    # utiliser le dossier du module pour trouver les CSV
+    folder = os.path.dirname(__file__)
+
+    try:
+        CSV_FILES = [f for f in os.listdir(folder) if f.lower().endswith('.csv')]
+    except Exception:
+        CSV_FILES = []
 
     for file in CSV_FILES:
         path = os.path.join(folder, file)

@@ -6,11 +6,12 @@ import os
 global vocab
 vocab = {}
 
+# CSV_FILES will be discovered dynamically from the data folder at runtime
+
 def load_all_vocab():
     # utiliser le dossier du module pour trouver les CSV
     folder = os.path.dirname(__file__)
 
-    # lister tous les fichiers .csv présents dans le dossier
     try:
         CSV_FILES = [f for f in os.listdir(folder) if f.lower().endswith('.csv')]
     except Exception:
