@@ -14,8 +14,8 @@ from games.memory_game import open_memory_game
 from training.training_mode import open_training_mode
 from scores.scores import open_scores
 
-# from data.vocab_loader import load_all_vocab
-# load_all_vocab()
+from data.vocab_loader import load_all_vocab
+load_all_vocab()
 
 # ==========================
 # Fenêtre principale
@@ -146,43 +146,6 @@ ttk.Button(
     style="Menu.TButton",
     command=open_memory_game
 ).pack(fill="x", pady=5)
-
-# ==========================
-# Progression
-# ==========================
-progress_frame = tk.LabelFrame(
-    root,
-    text=" Progress ",
-    font=("Arial", 12, "bold"),
-    padx=20,
-    pady=10,
-    bg="white"
-)
-progress_frame.pack(fill="x", padx=40, pady=10)
-
-tk.Label(
-    progress_frame,
-    text="Training and scores",
-    font=("Arial", 11),
-    bg="white"
-).pack(pady=(0, 10))
-
-buttons_frame = tk.Frame(progress_frame, bg="white")
-buttons_frame.pack()
-
-ttk.Button(
-    buttons_frame,
-    text="Training Mode",
-    style="Menu.TButton",
-    command=open_training_mode
-).pack(side="left", padx=10)
-
-ttk.Button(
-    buttons_frame,
-    text="Scores",
-    style="Menu.TButton",
-    command=open_scores
-).pack(side="left", padx=10)
 
 # ==========================
 # Bouton quitter
