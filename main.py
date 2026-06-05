@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 
 from vocab.add_word import open_add_word
-from vocab.edit_word import open_edit_word
 from vocab.delete_word import open_delete_word
 from vocab.display_vocab import open_display_vocab
 
@@ -91,13 +90,6 @@ ttk.Button(
     text="Add Word",
     style="Menu.TButton",
     command=open_add_word
-).pack(fill="x", pady=5)
-
-ttk.Button(
-    vocab_frame,
-    text="Modify Word",
-    style="Menu.TButton",
-    command=open_edit_word
 ).pack(fill="x", pady=5)
 
 ttk.Button(
