@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 
 from vocab.add_word import open_add_word
-from vocab.edit_word import open_edit_word
 from vocab.delete_word import open_delete_word
 from vocab.display_vocab import open_display_vocab
 
@@ -95,13 +94,6 @@ ttk.Button(
 
 ttk.Button(
     vocab_frame,
-    text="Modify Word",
-    style="Menu.TButton",
-    command=open_edit_word
-).pack(fill="x", pady=5)
-
-ttk.Button(
-    vocab_frame,
     text="Delete Word",
     style="Menu.TButton",
     command=open_delete_word
@@ -154,43 +146,6 @@ ttk.Button(
     style="Menu.TButton",
     command=open_memory_game
 ).pack(fill="x", pady=5)
-
-# ==========================
-# Progression
-# ==========================
-progress_frame = tk.LabelFrame(
-    root,
-    text=" Progress ",
-    font=("Arial", 12, "bold"),
-    padx=20,
-    pady=10,
-    bg="white"
-)
-progress_frame.pack(fill="x", padx=40, pady=10)
-
-tk.Label(
-    progress_frame,
-    text="Training and scores",
-    font=("Arial", 11),
-    bg="white"
-).pack(pady=(0, 10))
-
-buttons_frame = tk.Frame(progress_frame, bg="white")
-buttons_frame.pack()
-
-ttk.Button(
-    buttons_frame,
-    text="Training Mode",
-    style="Menu.TButton",
-    command=open_training_mode
-).pack(side="left", padx=10)
-
-ttk.Button(
-    buttons_frame,
-    text="Scores",
-    style="Menu.TButton",
-    command=open_scores
-).pack(side="left", padx=10)
 
 # ==========================
 # Bouton quitter (bas droite)
