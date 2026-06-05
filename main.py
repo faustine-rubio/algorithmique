@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from vocab.add_word import open_add_word
+from vocab.edit_word import open_edit_word
 from vocab.delete_word import open_delete_word
 from vocab.display_vocab import open_display_vocab
 
@@ -14,8 +15,8 @@ from games.memory_game import open_memory_game
 from training.training_mode import open_training_mode
 from scores.scores import open_scores
 
-from data.vocab_data import load_all_vocab
-load_all_vocab()
+# from data.vocab_loader import load_all_vocab
+# load_all_vocab()
 
 # ==========================
 # Fenêtre principale
@@ -94,6 +95,13 @@ ttk.Button(
 
 ttk.Button(
     vocab_frame,
+    text="Modify Word",
+    style="Menu.TButton",
+    command=open_edit_word
+).pack(fill="x", pady=5)
+
+ttk.Button(
+    vocab_frame,
     text="Delete Word",
     style="Menu.TButton",
     command=open_delete_word
@@ -147,26 +155,53 @@ ttk.Button(
     command=open_memory_game
 ).pack(fill="x", pady=5)
 
+# ==========================
+# Progression
+# ==========================
+progress_frame = tk.LabelFrame(
+    root,
+    text=" Progress ",
+    font=("Arial", 12, "bold"),
+    padx=20,
+    pady=10,
+    bg="white"
+)
+progress_frame.pack(fill="x", padx=40, pady=10)
+
+tk.Label(
+    progress_frame,
+    text="Training and scores",
+    font=("Arial", 11),
+    bg="white"
+).pack(pady=(0, 10))
+
+buttons_frame = tk.Frame(progress_frame, bg="white")
+buttons_frame.pack()
+
 ttk.Button(
-    games_frame,
+    buttons_frame,
     text="Training Mode",
     style="Menu.TButton",
     command=open_training_mode
-).pack(fill="x", pady=5)
+).pack(side="left", padx=10)
+
+ttk.Button(
+    buttons_frame,
+    text="Scores",
+    style="Menu.TButton",
+    command=open_scores
+).pack(side="left", padx=10)
 
 # ==========================
-# Bouton quitter (bas droite)
+# Bouton quitter
 # ==========================
-bottom_quit_frame = tk.Frame(root, bg="#F5F7FA")
-bottom_quit_frame.pack(fill="x", side="bottom", pady=12, padx=20)
-
 quit_button = ttk.Button(
-    bottom_quit_frame,
-    text="Quitter",
+    root,
+    text="Quit",
     style="Menu.TButton",
     command=root.destroy
 )
-quit_button.pack(side="right")
+quit_button.pack(pady=20)
 
 # ==========================
 # Lancement
