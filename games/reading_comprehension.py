@@ -82,6 +82,13 @@ def open_reading_comprehension():
     )
     result_label.pack(side="left", padx=10, pady=10)
 
+    quit_button = ttk.Button(
+        bottom_frame,
+        text="Quitter",
+        command=window.destroy
+    )
+    quit_button.pack(side="right", padx=15, pady=15)    
+
     submit_button = ttk.Button(
         bottom_frame,
         text="Valider",
@@ -96,12 +103,7 @@ def open_reading_comprehension():
     )
     reset_button.pack(side="right", padx=5, pady=15)
 
-    quit_button = ttk.Button(
-        bottom_frame,
-        text="Quitter",
-        command=window.destroy
-    )
-    quit_button.pack(side="right", padx=15, pady=15)
+
 
     # choix unique par question
     choice_vars = [tk.IntVar(value=0) for _ in range(10)]
