@@ -14,7 +14,7 @@ def open_reverse_translation():
         window = tk.Toplevel()
         own_root = False
 
-    window.title("Quiz")
+    window.title("Quiz (en=>fr)")
     window.geometry("500x320")
     window.resizable(False, False)
 
@@ -26,7 +26,7 @@ def open_reverse_translation():
     # construire la liste de paires (français, anglais) disponibles
     word_pairs = [(french, data[0]) for french, data in vocab.items() if data and len(data) >= 1]
     if not word_pairs:
-        messagebox.showinfo("Quiz", "Le vocabulaire est vide. Ajoutez des mots d'abord.")
+        messagebox.showinfo("Quiz (en=>fr)", "Le vocabulaire est vide. Ajoutez des mots d'abord.")
         if own_root:
             window.destroy()
         return
@@ -38,7 +38,7 @@ def open_reverse_translation():
     selected = random.sample(word_pairs, nb_questions)
 
     # Titre
-    title = tk.Label(window, text="Quiz", font=("Arial", 18, "bold"))
+    title = tk.Label(window, text="Quiz (en=>fr)", font=("Arial", 18, "bold"))
     title.pack(pady=12)
 
     content_frame = tk.Frame(window)
