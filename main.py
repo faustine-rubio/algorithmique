@@ -72,7 +72,7 @@ bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 # ==========================
 # Fenêtre principale
 # ==========================
-root.title("Vocable – Apprentissage de vocabulaire anglais")
+root.title("Vocable – English Vocabulary Learning")
 root.geometry("960x620")
 root.minsize(860, 580)
 root.maxsize(1280, 900)
@@ -117,9 +117,9 @@ welcome_frame.pack(side="left")
 
 tk.Label(welcome_frame, text="👤", font=("Helvetica", 20), bg=WHITE)\
     .grid(row=0, column=0, rowspan=2, padx=(12, 8), pady=10)
-tk.Label(welcome_frame, text="Bienvenue !", font=("Helvetica", 11, "bold"),
+tk.Label(welcome_frame, text="Welcome!", font=("Helvetica", 11, "bold"),
          bg=WHITE, fg=NAVY).grid(row=0, column=1, sticky="w", padx=(0, 14))
-tk.Label(welcome_frame, text="Apprends, joue\net progresse en anglais !",
+tk.Label(welcome_frame, text="Learn, play\nand improve your English!",
          font=("Helvetica", 9), bg=WHITE, fg=GRAY_TEXT, justify="left")\
     .grid(row=1, column=1, sticky="w", padx=(0, 14))
 
@@ -129,7 +129,7 @@ center_frame.pack(side="left", expand=True)
 
 tk.Label(center_frame, text="VOCABLE", font=("Helvetica", 32, "bold"),
          bg=BG_COLOR, fg=NAVY).pack()
-tk.Label(center_frame, text="Language Learning Center",
+tk.Label(center_frame, text="English Vocabulary Learning",
          font=("Helvetica", 11), bg=BG_COLOR, fg=GRAY_TEXT).pack()
 
 # ---- Stats (droite) ----
@@ -138,11 +138,11 @@ stats_frame = tk.Frame(header, bg=WHITE, relief="flat", bd=0,
 stats_frame.pack(side="right", padx=8, pady=6)
 
 # Meilleurs scores par jeu (se mettra à jour via l'évènement <<BestScoreChanged>>)
-tk.Label(stats_frame, text="🏆  Meilleurs scores", font=("Helvetica", 9),
+tk.Label(stats_frame, text="🏆  Best Scores", font=("Helvetica", 9),
          bg=WHITE, fg=GRAY_TEXT).grid(row=0, column=0, sticky="w", padx=14, pady=(8, 4))
 
 best_labels = {}
-games_keys = [("Quiz", "quiz"), ("Pendu", "hangman"), ("Mémoire", "memory"), ("Inversé", "reverse"), ("Lecture", "reading")]
+games_keys = [("Quiz", "quiz"), ("Hangman", "hangman"), ("Memory", "memory"), ("Reverse", "reverse"), ("Reading", "reading")]
 for i, (label_name, key) in enumerate(games_keys, start=1):
     lbl = tk.Label(stats_frame, text=f"{label_name} : {get_best_score(key)}", font=("Helvetica", 10, "bold"),
                    bg=WHITE, fg=NAVY)
@@ -150,7 +150,7 @@ for i, (label_name, key) in enumerate(games_keys, start=1):
     best_labels[key] = lbl
 
 # Nombre total de mots
-tk.Label(stats_frame, text="📊  Nombre de mots", font=("Helvetica", 9),
+tk.Label(stats_frame, text="📊  Total Words", font=("Helvetica", 9),
          bg=WHITE, fg=GRAY_TEXT).grid(row=len(games_keys)+1, column=0, sticky="w", padx=14, pady=(6, 0))
 tk.Label(stats_frame, text=str(len(vocab)), font=("Helvetica", 18, "bold"),
          bg=WHITE, fg=NAVY).grid(row=len(games_keys)+2, column=0, sticky="w", padx=14, pady=(0, 8))
@@ -208,61 +208,61 @@ def make_card(parent, col, icon, title, subtitle, btn_text, command):
 # ---- Vocabulaire ----
 def open_vocab_menu():
     win = tk.Toplevel(root)
-    win.title("Vocabulaire")
+    win.title("Vocabulary")
     win.geometry("300x200")
     win.configure(bg=BG_COLOR)
-    tk.Label(win, text="Vocabulaire", font=("Helvetica", 14, "bold"),
+    tk.Label(win, text="Vocabulary", font=("Helvetica", 14, "bold"),
              bg=BG_COLOR, fg=NAVY).pack(pady=14)
-    make_rounded_button(win, "Afficher", open_display_vocab, width=18).pack(pady=4)
-    make_rounded_button(win, "Ajouter un mot", open_add_word, width=18).pack(pady=4)
-    make_rounded_button(win, "Supprimer un mot", open_delete_word, width=18).pack(pady=4)
+    make_rounded_button(win, "Display", open_display_vocab, width=18).pack(pady=4)
+    make_rounded_button(win, "Add Word", open_add_word, width=18).pack(pady=4)
+    make_rounded_button(win, "Delete Word", open_delete_word, width=18).pack(pady=4)
 
-make_card(cards_area, 0, "📖", "VOCABULAIRE",
-          "Gérer et consulter\nla liste des mots",
-          "Accéder", open_vocab_menu)
+make_card(cards_area, 0, "📖", "VOCABULARY",
+          "Manage and consult\nthe list of words",
+          "Open", open_vocab_menu)
 
 # ---- Jeux ----
 def open_games_menu():
     win = tk.Toplevel(root)
-    win.title("Jeux")
+    win.title("Games")
     win.geometry("300x280")
     win.configure(bg=BG_COLOR)
-    tk.Label(win, text="Jeux éducatifs", font=("Helvetica", 14, "bold"),
+    tk.Label(win, text="Educational Games", font=("Helvetica", 14, "bold"),
              bg=BG_COLOR, fg=NAVY).pack(pady=14)
-    make_rounded_button(win, "Quiz de traduction", open_quiz, width=22).pack(pady=3)
-    make_rounded_button(win, "Pendu", open_hangman, width=22).pack(pady=3)
-    make_rounded_button(win, "Traduction inversée", open_reverse_translation, width=22).pack(pady=3)
-    make_rounded_button(win, "Compréhension écrite", open_reading_comprehension, width=22).pack(pady=3)
+    make_rounded_button(win, "Translation Quiz", open_quiz, width=22).pack(pady=3)
+    make_rounded_button(win, "Hangman", open_hangman, width=22).pack(pady=3)
+    make_rounded_button(win, "Reverse Translation", open_reverse_translation, width=22).pack(pady=3)
+    make_rounded_button(win, "Reading Comprehension", open_reading_comprehension, width=22).pack(pady=3)
     make_rounded_button(win, "Memory", open_memory_game, width=22).pack(pady=3)
 
-make_card(cards_area, 1, "🎮", "JEUX",
-          "Joue et révise ton\nvocabulaire",
-          "Jouer", open_games_menu)
+make_card(cards_area, 1, "🎮", "GAMES",
+          "Play and review your\nvocabulary",
+          "Play", open_games_menu)
 
-# ---- Entraînement ----
-make_card(cards_area, 2, "🏋", "ENTRAÎNEMENT",
-          "Révise les mots\nsans pression",
-          "S'entraîner", open_training_mode)
+# ---- Training ----
+make_card(cards_area, 2, "🏋", "TRAINING",
+          "Review words\nwithout pressure",
+          "Train", open_training_mode)
 
 # ---- Progrès ----
-make_card(cards_area, 3, "📈", "PROGRÈS",
-          "Voir tes scores\net statistiques",
-          "Voir", open_scores)
+make_card(cards_area, 3, "📈", "PROGRESS",
+          "View your scores\nand statistics",
+          "View", open_scores)
 
 # ---- Paramètres (placeholder) ----
 def open_settings():
     win = tk.Toplevel(root)
-    win.title("Paramètres")
+    win.title("Settings")
     win.geometry("300x160")
     win.configure(bg=BG_COLOR)
-    tk.Label(win, text="Paramètres", font=("Helvetica", 14, "bold"),
+    tk.Label(win, text="Settings", font=("Helvetica", 14, "bold"),
              bg=BG_COLOR, fg=NAVY).pack(pady=20)
-    tk.Label(win, text="Options et préférences\n(à implémenter)",
+    tk.Label(win, text="Options and preferences\n(to be implemented)",
              font=("Helvetica", 10), bg=BG_COLOR, fg=GRAY_TEXT).pack()
 
-make_card(cards_area, 4, "⚙️", "PARAMÈTRES",
-          "Options et\npréférences",
-          "Ouvrir", open_settings)
+make_card(cards_area, 4, "⚙️", "SETTINGS",
+          "Options and\npreferences",
+          "Open", open_settings)
 
 # ==========================
 # Pied de page
@@ -276,20 +276,20 @@ quote_frame.pack(side="left", expand=True, fill="x", padx=(0, 10), pady=2)
 tk.Label(quote_frame,
          text='" Every day is a chance to learn something new. "',
          font=("Helvetica", 10, "italic"), bg=WHITE, fg=NAVY).pack(pady=4)
-tk.Label(quote_frame, text="– Learn • Play • Grow",
+tk.Label(quote_frame, text="Learn • Play • Grow",
          font=("Helvetica", 9), bg=WHITE, fg=GRAY_TEXT).pack(pady=(0, 6))
 
 # Bouton À propos
 about_btn = make_rounded_button(
-    footer, "ℹ  À propos",
-    lambda: messagebox.showinfo("À propos", "Vocable – English Vocabulary Learning\nv1.0"),
+    footer, "ℹ  About",
+    lambda: messagebox.showinfo("About", "Vocable – English Vocabulary Learning\nv1.0"),
     bg=WHITE, fg=NAVY, width=12
 )
 about_btn.config(highlightbackground=BORDER_COLOR, highlightthickness=1)
 about_btn.pack(side="left", pady=2)
 
 # Bouton Quitter
-quit_btn = make_rounded_button(footer, "⇥  Quitter", root.destroy,
+quit_btn = make_rounded_button(footer, "🔚 Quit", root.destroy,
                                 bg=WHITE, fg=NAVY, width=12)
 quit_btn.config(highlightbackground=BORDER_COLOR, highlightthickness=1)
 quit_btn.pack(side="right", pady=2)
