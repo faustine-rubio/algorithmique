@@ -14,7 +14,7 @@ def open_quiz():
         window = tk.Toplevel()
         own_root = False
 
-    window.title("Quiz")
+    window.title("Quiz (fr=>en)")
     window.geometry("500x320")
     window.resizable(False, False)
 
@@ -26,7 +26,7 @@ def open_quiz():
     # construire la liste de mots français disponibles
     french_words = list(vocab.keys())
     if not french_words:
-        tk.messagebox.showinfo("Quiz", "Le vocabulaire est vide. Ajoutez des mots d'abord.")
+        tk.messagebox.showinfo("Quiz (fr=>en)", "Le vocabulaire est vide. Ajoutez des mots d'abord.")
         if own_root:
             window.destroy()
         return
@@ -38,7 +38,7 @@ def open_quiz():
     selected = random.sample(french_words, nb_questions)
 
     # Titre
-    title = tk.Label(window, text="Quiz", font=("Arial", 18, "bold"))
+    title = tk.Label(window, text="Quiz (fr=>en)", font=("Arial", 18, "bold"))
     title.pack(pady=12)
 
     content_frame = tk.Frame(window)
