@@ -2,7 +2,7 @@ import random
 import tkinter as tk
 from tkinter import ttk
 from data.vocab_data import vocab, load_all_vocab
-from scores.scores import set_best_score
+# from scores.scores import set_best_score
 
 
 def open_hangman():
