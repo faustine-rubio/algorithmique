@@ -19,7 +19,7 @@ from games.reading_comprehension import open_reading_comprehension
 from games.memory_game import open_memory_game
 
 from training.training_mode import open_training_mode
-from scores.scores import open_scores
+from scores.scores import open_scores, get_best_score
 
 from data.vocab_data import load_all_vocab, vocab
 load_all_vocab()
@@ -135,16 +135,41 @@ tk.Label(center_frame, text="Language Learning Center",
 # ---- Stats (droite) ----
 stats_frame = tk.Frame(header, bg=WHITE, relief="flat", bd=0,
                         highlightbackground=BORDER_COLOR, highlightthickness=1)
-stats_frame.pack(side="right")
+stats_frame.pack(side="right", padx=8, pady=6)
 
-tk.Label(stats_frame, text="🏆  Meilleur score", font=("Helvetica", 9),
-         bg=WHITE, fg=GRAY_TEXT).grid(row=0, column=0, sticky="w", padx=14, pady=(8, 0))
-tk.Label(stats_frame, text="1250", font=("Helvetica", 18, "bold"),
-         bg=WHITE, fg=NAVY).grid(row=1, column=0, sticky="w", padx=14)
+# Meilleurs scores par jeu (se mettra à jour via l'évènement <<BestScoreChanged>>)
+tk.Label(stats_frame, text="🏆  Meilleurs scores", font=("Helvetica", 9),
+         bg=WHITE, fg=GRAY_TEXT).grid(row=0, column=0, sticky="w", padx=14, pady=(8, 4))
+
+best_labels = {}
+games_keys = [("Quiz", "quiz"), ("Pendu", "hangman"), ("Mémoire", "memory"), ("Inversé", "reverse"), ("Lecture", "reading")]
+for i, (label_name, key) in enumerate(games_keys, start=1):
+    lbl = tk.Label(stats_frame, text=f"{label_name} : {get_best_score(key)}", font=("Helvetica", 10, "bold"),
+                   bg=WHITE, fg=NAVY)
+    lbl.grid(row=i, column=0, sticky="w", padx=14)
+    best_labels[key] = lbl
+
+# Nombre total de mots
 tk.Label(stats_frame, text="📊  Nombre de mots", font=("Helvetica", 9),
-         bg=WHITE, fg=GRAY_TEXT).grid(row=2, column=0, sticky="w", padx=14, pady=(6, 0))
+         bg=WHITE, fg=GRAY_TEXT).grid(row=len(games_keys)+1, column=0, sticky="w", padx=14, pady=(6, 0))
 tk.Label(stats_frame, text=str(len(vocab)), font=("Helvetica", 18, "bold"),
-         bg=WHITE, fg=NAVY).grid(row=3, column=0, sticky="w", padx=14, pady=(0, 8))
+         bg=WHITE, fg=NAVY).grid(row=len(games_keys)+2, column=0, sticky="w", padx=14, pady=(0, 8))
+
+
+def refresh_best_scores(event=None):
+    for name, key in games_keys:
+        val = get_best_score(key)
+        lbl = best_labels.get(key)
+        if lbl:
+            lbl.config(text=f"{name} : {val}")
+
+
+# bind pour rafraîchir lorsque `set_best_score` notifie
+try:
+    if root is not None:
+        root.bind("<<BestScoreChanged>>", refresh_best_scores)
+except Exception:
+    pass
 
 # ==========================
 # Cartes principales
@@ -208,7 +233,7 @@ def open_games_menu():
     make_rounded_button(win, "Pendu", open_hangman, width=22).pack(pady=3)
     make_rounded_button(win, "Traduction inversée", open_reverse_translation, width=22).pack(pady=3)
     make_rounded_button(win, "Compréhension écrite", open_reading_comprehension, width=22).pack(pady=3)
-    make_rounded_button(win, "Jeu de mémoire", open_memory_game, width=22).pack(pady=3)
+    make_rounded_button(win, "Memory", open_memory_game, width=22).pack(pady=3)
 
 make_card(cards_area, 1, "🎮", "JEUX",
           "Joue et révise ton\nvocabulaire",
