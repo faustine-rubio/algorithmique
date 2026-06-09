@@ -1,6 +1,8 @@
 import random
 import tkinter as tk
 from tkinter import ttk
+from data.vocab_data import vocab, load_all_vocab
+from scores.scores import set_best_score
 
 
 def open_hangman():
@@ -10,17 +12,31 @@ def open_hangman():
     window.resizable(False, False)
     window.config(bg="#eef5ff")
 
-    words = {
-        "apple": "pomme",
-        "truck": "camion",
-        "house": "maison",
-        "dog": "chien",
-        "cat": "chat",
-        "book": "livre",
-        "car": "voiture",
-        "tree": "arbre"
-    }
-    solution = random.choice(list(words))
+    def choose_word():
+        # s'assurer que le vocab est chargé
+        if not vocab:
+            try:
+                load_all_vocab()
+            except Exception:
+                pass
+        # construire un mapping anglais -> français à partir du vocab
+        eng_to_fr = {data[0]: french for french, data in vocab.items() if data and data[0]}
+        # fallback si vocab vide
+        if not eng_to_fr:
+            eng_to_fr = {
+                "apple": "pomme",
+                "truck": "camion",
+                "house": "maison",
+                "dog": "chien",
+                "cat": "chat",
+                "book": "livre",
+                "car": "voiture",
+                "tree": "arbre"
+            }
+        solution = random.choice(list(eng_to_fr.keys()))
+        return solution, eng_to_fr
+
+    solution, words = choose_word()
     lettres_trouvees = set()
     tentatives = tk.IntVar(value=7)
     erreurs = tk.IntVar(value=0)
@@ -68,10 +84,34 @@ def open_hangman():
             status_label.config(text=">>> Gagné ! <<<", fg="#0a8f3c")
             guess_button.config(state="disabled")
             letter_entry.config(state="disabled")
+            try:
+                set_best_score("hangman", tentatives.get())
+            except Exception:
+                pass
         elif tentatives.get() <= 0:
-            status_label.config(text=f"Perdu... Le mot était '{solution}'.", fg="#ce2f2f")
+            # montrer aussi la traduction française si disponible
+            french = words.get(solution, "")
+            if french:
+                status_label.config(text=f"Perdu... Le mot était '{solution}' ({french}).", fg="#ce2f2f")
+            else:
+                status_label.config(text=f"Perdu... Le mot était '{solution}'.", fg="#ce2f2f")
             guess_button.config(state="disabled")
             letter_entry.config(state="disabled")
+        # afficher la traduction si il ne reste qu'une tentative et que le mot n'est pas trouvé
+        try:
+            if tentatives.get() == 1 and "_" in get_affichage():
+                french = words.get(solution, "")
+                if french:
+                    hint_label.config(text=f"Traduction : {french}")
+                else:
+                    hint_label.config(text="")
+            else:
+                hint_label.config(text="")
+        except Exception:
+            try:
+                hint_label.config(text="")
+            except Exception:
+                pass
 
     def proposer_lettre(event=None):
         lettre = letter_entry.get().strip().lower()[:1]
@@ -96,8 +136,8 @@ def open_hangman():
             refresh_interface("Lettre incorrecte.")
 
     def nouvelle_partie():
-        nonlocal solution
-        solution = random.choice(list(words))
+        nonlocal solution, words
+        solution, words = choose_word()
         lettres_trouvees.clear()
         erreurs.set(0)
         tentatives.set(7)
@@ -114,6 +154,10 @@ def open_hangman():
 
     status_label = tk.Label(window, text="Bienvenue !", font=("Arial", 12, "bold"), bg="#eef5ff", fg="#1a3c7a")
     status_label.place(x=280, y=70)
+
+    # label pour afficher un indice (traduction) lorsque ne reste qu'une tentative
+    hint_label = tk.Label(window, text="", font=("Arial", 11), bg="#eef5ff", fg="#1a3c7a")
+    hint_label.place(x=280, y=100)
 
     word_label = tk.Label(window, text=get_affichage(), font=("Courier", 28, "bold"), bg="#eef5ff", fg="#333333")
     word_label.place(x=280, y=140)
