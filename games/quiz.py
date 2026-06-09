@@ -50,6 +50,9 @@ def open_quiz():
     question_label = tk.Label(content_frame, text="")
     question_label.pack()
 
+    instruction_label = tk.Label(content_frame, text="Traduisez en anglais :", font=("Arial", 12))
+    instruction_label.pack()
+
     word_label = tk.Label(content_frame, text="", font=("Arial", 16, "bold"))
     word_label.pack(pady=8)
 
