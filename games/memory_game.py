@@ -40,25 +40,29 @@ def open_memory_game():
     pair_ids = [pair_id for _, pair_id in card_data]
 
     window = tk.Toplevel()
-    window.title("Jeu de mémoire")
-    window.geometry("620x620")
+    window.title("Memory Game")
+    window.geometry("700x650")
     window.resizable(False, False)
+    window.config(bg="#eef5ff")
+
 
     title = tk.Label(
         window,
         text="Jeu de mémoire",
-        font=("Arial", 18, "bold")
+        font=("Comic Sans MS", 24, "bold"),
+        bg="#eef5ff",
+        fg="#1a3c7a"
     )
     title.pack(pady=10)
 
-    board_frame = tk.Frame(window)
+    board_frame = tk.Frame(window, bg="#eef5ff")
     board_frame.pack(padx=10, pady=10)
 
-    status_frame = tk.Frame(window)
-    status_frame.pack(fill="x", padx=10, pady=(0, 10))
+    status_frame = tk.Frame(window, bg="#eef5ff")
+    status_frame.pack(fill="x", padx=10)
 
-    bottom_frame = tk.Frame(window)
-    bottom_frame.pack(fill="x", padx=10, pady=(0, 10))
+    bottom_frame = tk.Frame(window, bg="#eef5ff")
+    bottom_frame.pack(fill="x", padx=10, pady=10)
 
     moves_var = tk.IntVar(value=0)
     revealed = [False] * (ROWS * COLS)
@@ -106,10 +110,24 @@ def open_memory_game():
         busy = True
         window.after(800, check_match)
 
-    moves_label = tk.Label(status_frame, text="Coups :")
-    moves_value_label = tk.Label(status_frame, textvariable=moves_var)
+    moves_label = tk.Label(
+        status_frame,
+        text="Coups :",
+        font=("Arial", 12, "bold"),
+        bg="#eef5ff",
+        fg="#2b4c7a"
+    )
+
+    moves_value_label = tk.Label(
+        status_frame,
+        textvariable=moves_var,
+        font=("Arial", 12),
+        bg="#eef5ff",
+        fg="#2b4c7a"
+    )
+
     moves_label.pack(side="left")
-    moves_value_label.pack(side="left", padx=(5, 0))
+    moves_value_label.pack(side="left", padx=5)
 
     for index in range(ROWS * COLS):
         button = ttk.Button(
