@@ -4,6 +4,7 @@ from tkinter import messagebox
 import random
 
 from data.vocab_data import vocab, load_all_vocab
+from scores.scores import set_best_score
 
 ROWS = 4
 COLS = 4
@@ -86,11 +87,20 @@ def open_memory_game():
         busy = False
 
         if all(revealed):
+            moves = moves_var.get()
+
+            # score basé sur efficacité (plus tu fais peu de coups, meilleur score)
+            score = max(0, total_pairs * 10 - moves)
+
+            set_best_score("memory", score)
+            window.event_generate("<<BestScoreChanged>>")
+
             messagebox.showinfo(
                 "Victoire",
-                f"Bravo ! Vous avez gagné en {moves_var.get()} coups.",
+                f"Bravo ! Vous avez gagné en {moves} coups.\nScore : {score}",
                 parent=window
             )
+
             window.destroy()
 
     def on_card_click(index):

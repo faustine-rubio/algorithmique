@@ -3,7 +3,7 @@ from tkinter import ttk, messagebox
 import random
 
 from data.vocab_data import vocab
-
+from scores.scores import set_best_score
 
 def open_reverse_translation():
     # crée une fenêtre Tk principale si nécessaire
@@ -74,8 +74,12 @@ def open_reverse_translation():
         else:
             word_label.config(text="Quiz terminé !")
             result_label.config(text=f"Score final : {score}/{nb_questions}")
+
             validate_button.config(state="disabled")
             answer_entry.config(state="disabled")
+
+            # 🔥 AJOUT : sauvegarde du meilleur score
+            set_best_score("en-fr", score)
 
     def verifier_reponse():
         nonlocal score, question_index

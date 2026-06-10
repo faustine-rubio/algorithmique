@@ -3,7 +3,7 @@ from tkinter import ttk
 import random
 
 from data.vocab_data import vocab
-
+from scores.scores import set_best_score
 
 def open_quiz():
     # crée une fenêtre Tk principale si nécessaire
@@ -14,7 +14,7 @@ def open_quiz():
         window = tk.Toplevel()
         own_root = False
 
-    window.title("Quiz (fr=>en)")
+    window.title("Quiz (FR → EN)")
     window.geometry("500x320")
     window.resizable(False, False)
 
@@ -26,7 +26,7 @@ def open_quiz():
     # construire la liste de mots français disponibles
     french_words = list(vocab.keys())
     if not french_words:
-        tk.messagebox.showinfo("Quiz (fr=>en)", "Le vocabulaire est vide. Ajoutez des mots d'abord.")
+        tk.messagebox.showinfo("Quiz (FR → EN)", "Le vocabulaire est vide. Ajoutez des mots d'abord.")
         if own_root:
             window.destroy()
         return
@@ -38,7 +38,7 @@ def open_quiz():
     selected = random.sample(french_words, nb_questions)
 
     # Titre
-    title = tk.Label(window, text="Quiz (fr=>en)", font=("Arial", 18, "bold"))
+    title = tk.Label(window, text="Quiz (FR → EN)", font=("Arial", 18, "bold"))
     title.pack(pady=12)
 
     content_frame = tk.Frame(window)
@@ -64,6 +64,7 @@ def open_quiz():
 
     def afficher_question():
         nonlocal question_index
+
         if question_index < nb_questions:
             french = selected[question_index]
             word_label.config(text=french)
@@ -71,9 +72,14 @@ def open_quiz():
             answer_entry.config(state="normal")
             answer_entry.delete(0, tk.END)
             result_label.config(text="")
+
         else:
+            set_best_score("fr_en", score)
+            window.event_generate("<<BestScoreChanged>>")
+
             word_label.config(text="Quiz terminé !")
             result_label.config(text=f"Score final : {score}/{nb_questions}")
+
             validate_button.config(state="disabled")
             answer_entry.config(state="disabled")
 
@@ -113,30 +119,30 @@ def open_quiz():
         window.mainloop()
 
 
-if __name__ == "__main__":
-    open_quiz()
-    buttons_frame = tk.Frame(content_frame)
-    buttons_frame.pack(pady=10)
+    if __name__ == "__main__":
+        open_quiz()
+        buttons_frame = tk.Frame(content_frame)
+        buttons_frame.pack(pady=10)
 
-    validate_button = ttk.Button(
-        buttons_frame,
-        text="Valider",
-        command=verifier_reponse
-    )
-    validate_button.pack(side="left", padx=5)
+        validate_button = ttk.Button(
+            buttons_frame,
+            text="Valider",
+            command=verifier_reponse
+        )
+        validate_button.pack(side="left", padx=5)
 
-    quit_button = ttk.Button(
-        buttons_frame,
-        text="Quitter",
-        command=window.destroy
-    )
-    quit_button.pack(side="left", padx=5)
+        quit_button = ttk.Button(
+            buttons_frame,
+            text="Quitter",
+            command=window.destroy
+        )
+        quit_button.pack(side="left", padx=5)
 
-    # Première question
-    afficher_question()
+        # Première question
+        afficher_question()
 
-    if own_root:
-        window.mainloop()
+        if own_root:
+            window.mainloop()
 
 
 if __name__ == "__main__":

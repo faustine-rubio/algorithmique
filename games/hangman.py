@@ -2,7 +2,7 @@ import random
 import tkinter as tk
 from tkinter import ttk
 from data.vocab_data import vocab, load_all_vocab
-# from scores.scores import set_best_score
+from scores.scores import set_best_score
 
 
 def open_hangman():
@@ -85,7 +85,10 @@ def open_hangman():
             guess_button.config(state="disabled")
             letter_entry.config(state="disabled")
             try:
-                set_best_score("hangman", tentatives.get())
+                score = tentatives.get()
+                
+                set_best_score("hangman", score)
+                window.event_generate("<<BestScoreChanged>>")
             except Exception:
                 pass
         elif tentatives.get() <= 0:

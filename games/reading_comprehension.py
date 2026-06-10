@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from scores.scores import set_best_score
 
 def open_reading_comprehension():
     window = tk.Toplevel()
@@ -110,13 +111,19 @@ def open_reading_comprehension():
 
     def calculate_score():
         correct_answers = [2, 3, 2, 4, 3, 3, 2, 3, 2, 4]
+
         score = sum(
             1
             for i, answer in enumerate(correct_answers)
             if choice_vars[i].get() == answer
         )
-        result_label.config(text=f"Score: {score} / {len(correct_answers)}")
+
+        result_label.config(text=f"Score: {score} / 10")
+
         show_feedback(correct_answers)
+
+        # AJOUT IMPORTANT : mise à jour du score global
+        set_best_score("reading", score)
 
     def normalize_text(text):
         if text.endswith(" ✓") or text.endswith(" ✗"):

@@ -127,47 +127,106 @@ tk.Label(welcome_frame, text="Learn, play\nand improve your English!",
 center_frame = tk.Frame(header, bg=BG_COLOR)
 center_frame.pack(side="left", expand=True)
 
+# ==========================
+# STATS FRAME (RIGHT PANEL)
+# ==========================
+stats_frame = tk.Frame(
+    header,
+    bg=WHITE,
+    relief="flat",
+    bd=0,
+    highlightbackground=BORDER_COLOR,
+    highlightthickness=1
+)
+
+stats_frame.pack(side="right", padx=8, pady=6)
+
 tk.Label(center_frame, text="VOCABLE", font=("Helvetica", 32, "bold"),
          bg=BG_COLOR, fg=NAVY).pack()
 tk.Label(center_frame, text="English Vocabulary Learning",
          font=("Helvetica", 11), bg=BG_COLOR, fg=GRAY_TEXT).pack()
 
-# ---- Stats (droite) ----
-stats_frame = tk.Frame(header, bg=WHITE, relief="flat", bd=0,
-                        highlightbackground=BORDER_COLOR, highlightthickness=1)
-stats_frame.pack(side="right", padx=8, pady=6)
+# ==========================
+# BEST SCORES
+# ==========================
 
-# Meilleurs scores par jeu (se mettra à jour via l'évènement <<BestScoreChanged>>)
-tk.Label(stats_frame, text="🏆  Best Scores", font=("Helvetica", 9),
-         bg=WHITE, fg=GRAY_TEXT).grid(row=0, column=0, sticky="w", padx=14, pady=(8, 4))
+tk.Label(
+    stats_frame,
+    text="🏆  Best Scores",
+    font=("Helvetica", 9),
+    bg=WHITE,
+    fg=GRAY_TEXT
+).grid(row=0, column=0, sticky="w", padx=14, pady=(8, 4))
+
 
 best_labels = {}
-games_keys = [("Quiz", "quiz"), ("Hangman", "hangman"), ("Memory", "memory"), ("Reverse", "reverse"), ("Reading", "reading")]
-for i, (label_name, key) in enumerate(games_keys, start=1):
-    lbl = tk.Label(stats_frame, text=f"{label_name} : {get_best_score(key)}", font=("Helvetica", 10, "bold"),
-                   bg=WHITE, fg=NAVY)
+
+games_keys = [
+    ("FR → EN", "fr_en", 5),
+    ("EN → FR", "en_fr", 5),
+    ("Hangman", "hangman", 7),
+    ("Memory", "memory", None),
+    ("Reading", "reading", 10)
+]
+
+for i, (label_name, key, max_score) in enumerate(games_keys, start=1):
+
+    value = get_best_score(key)
+
+    if max_score is None:
+        text = f"{label_name} : {value}"
+    else:
+        text = f"{label_name} : {value}/{max_score}"
+
+    lbl = tk.Label(
+        stats_frame,
+        text=text,
+        font=("Helvetica", 10, "bold"),
+        bg=WHITE,
+        fg=NAVY
+    )
+
     lbl.grid(row=i, column=0, sticky="w", padx=14)
-    best_labels[key] = lbl
-
-# Nombre total de mots
-tk.Label(stats_frame, text="📊  Total Words", font=("Helvetica", 9),
-         bg=WHITE, fg=GRAY_TEXT).grid(row=len(games_keys)+1, column=0, sticky="w", padx=14, pady=(6, 0))
-tk.Label(stats_frame, text=str(len(vocab)), font=("Helvetica", 18, "bold"),
-         bg=WHITE, fg=NAVY).grid(row=len(games_keys)+2, column=0, sticky="w", padx=14, pady=(0, 8))
+    best_labels[key] = (lbl, max_score)
 
 
+# Total words
+tk.Label(
+    stats_frame,
+    text="📊  Total Words",
+    font=("Helvetica", 9),
+    bg=WHITE,
+    fg=GRAY_TEXT
+).grid(row=len(games_keys)+1, column=0, sticky="w", padx=14, pady=(6, 0))
+
+
+tk.Label(
+    stats_frame,
+    text=str(len(vocab)),
+    font=("Helvetica", 18, "bold"),
+    bg=WHITE,
+    fg=NAVY
+).grid(row=len(games_keys)+2, column=0, sticky="w", padx=14, pady=(0, 8))
+
+
+# ==========================
+# REFRESH SCORES
+# ==========================
 def refresh_best_scores(event=None):
-    for name, key in games_keys:
+    for label_name, key, max_score in games_keys:
         val = get_best_score(key)
-        lbl = best_labels.get(key)
-        if lbl:
-            lbl.config(text=f"{name} : {val}")
+
+        lbl, max_score_value = best_labels[key]
+
+        if max_score_value is None:
+            lbl.config(text=f"{label_name} : {val}")
+        else:
+            lbl.config(text=f"{label_name} : {val}/{max_score_value}")
 
 
-# bind pour rafraîchir lorsque `set_best_score` notifie
+# bind event
 try:
-    if root is not None:
-        root.bind("<<BestScoreChanged>>", refresh_best_scores)
+    root.bind("<<BestScoreChanged>>", refresh_best_scores)
 except Exception:
     pass
 
