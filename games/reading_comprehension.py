@@ -1,10 +1,17 @@
+import os
+import sys
 import tkinter as tk
 from tkinter import ttk
-from scores.scores import set_best_score
+
+try:
+    from scores.scores import set_best_score
+except ModuleNotFoundError:
+    sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+    from scores.scores import set_best_score
 
 def open_reading_comprehension():
     window = tk.Toplevel()
-    window.title("Compréhension de texte ")
+    window.title("Reading Comprehension")
     window.geometry("750x700")
     window.resizable(False, False)
     window.config(bg="#eef5ff")
@@ -67,7 +74,7 @@ def open_reading_comprehension():
     # Titre
     title = tk.Label(
     content_frame,
-    text="Compréhension de texte",
+    text="Reading Comprehension",
     font=("Comic Sans MS", 24, "bold"),
     bg="#eef5ff",
     fg="#1a3c7a"
@@ -98,7 +105,7 @@ def open_reading_comprehension():
 
     quit_button = tk.Button(
     bottom_frame,
-    text="Quitter",
+    text="Exit",
     command=window.destroy,
     font=("Arial", 11, "bold"),
     bg="#e74c3c",
@@ -168,7 +175,7 @@ def open_reading_comprehension():
 
     submit_button = tk.Button(
         bottom_frame,
-        text="Valider",
+        text="Submit",
         command=calculate_score,
         font=("Arial", 11, "bold"),
         bg="#4a90e2",
@@ -180,7 +187,7 @@ def open_reading_comprehension():
 
     reset_button = tk.Button(
         bottom_frame,
-        text="Recommencer",
+        text="Reset",
         command=reset_quiz,
         font=("Arial", 11, "bold"),
         bg="#66bb6a",
