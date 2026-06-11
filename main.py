@@ -141,10 +141,51 @@ stats_frame = tk.Frame(
 
 stats_frame.pack(side="right", padx=8, pady=6)
 
-tk.Label(center_frame, text="VOCABLE", font=("Helvetica", 32, "bold"),
-         bg=BG_COLOR, fg=NAVY).pack()
-tk.Label(center_frame, text="English Vocabulary Learning",
-         font=("Helvetica", 11), bg=BG_COLOR, fg=GRAY_TEXT).pack()
+logo_path = os.path.join(
+    os.path.dirname(__file__),
+    "logo.png"
+)
+
+logo_photo = None
+
+if os.path.exists(logo_path):
+
+    if Image is not None and ImageTk is not None:
+
+        logo_img = Image.open(logo_path)
+
+        logo_img.thumbnail((450, 220))
+
+        logo_photo = ImageTk.PhotoImage(logo_img)
+
+        logo_label = tk.Label(
+            center_frame,
+            image=logo_photo,
+            bg=BG_COLOR
+        )
+
+        logo_label.image = logo_photo
+        logo_label.pack()
+
+    else:
+
+        tk.Label(
+            center_frame,
+            text="VOCABLE",
+            font=("Helvetica", 32, "bold"),
+            bg=BG_COLOR,
+            fg=NAVY
+        ).pack()
+
+else:
+
+    tk.Label(
+        center_frame,
+        text="VOCABLE",
+        font=("Helvetica", 32, "bold"),
+        bg=BG_COLOR,
+        fg=NAVY
+    ).pack()
 
 # ==========================
 # BEST SCORES
