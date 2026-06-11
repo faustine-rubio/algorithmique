@@ -5,11 +5,16 @@ from scores.scores import set_best_score
 def open_reading_comprehension():
     window = tk.Toplevel()
     window.title("Compréhension de texte ")
-    window.geometry("500x500")
-    window.resizable(True, True)
+    window.geometry("750x700")
+    window.resizable(False, False)
+    window.config(bg="#eef5ff")
 
     #Zone défilante
-    canvas = tk.Canvas(window)
+    canvas = tk.Canvas(
+    window,
+    bg="#eef5ff",
+    highlightthickness=0
+)
     scrollbar = ttk.Scrollbar(
         window, 
         orient="vertical", 
@@ -31,7 +36,10 @@ def open_reading_comprehension():
         expand=True
         )
 
-    content_frame = tk.Frame(canvas)
+    content_frame = tk.Frame(
+    canvas,
+    bg="#eef5ff"
+)
     canvas.create_window(
         (0, 0),
         window=content_frame,
@@ -58,18 +66,21 @@ def open_reading_comprehension():
 
     # Titre
     title = tk.Label(
-        content_frame,
-        text="Compréhension de texte ",
-        font=("Arial", 18, "bold")
-    )
+    content_frame,
+    text="Compréhension de texte",
+    font=("Comic Sans MS", 24, "bold"),
+    bg="#eef5ff",
+    fg="#1a3c7a"
+)
     title.pack(pady=(10, 5), anchor="w")
 
     subtitle = tk.Label(
-        content_frame,
-        text="A Visit to the Science Museum",
-        font=("Arial", 12, "italic"),
-        fg="gray20"
-    )
+    content_frame,
+    text="A Visit to the Science Museum",
+    font=("Arial", 13, "italic"),
+    bg="#eef5ff",
+    fg="#2b4c7a"
+)
     subtitle.pack(pady=(0, 15), anchor="w")
 
     # Frame pour aligner le bouton en bas à droite
@@ -77,34 +88,24 @@ def open_reading_comprehension():
     bottom_frame.pack(side="bottom", fill="x")
 
     result_label = tk.Label(
-        bottom_frame,
-        text="",
-        font=("Arial", 11)
-    )
+    bottom_frame,
+    text="",
+    font=("Arial", 12, "bold"),
+    bg="#eef5ff",
+    fg="#1a3c7a"
+)
     result_label.pack(side="left", padx=10, pady=10)
 
-    quit_button = ttk.Button(
-        bottom_frame,
-        text="Quitter",
-        command=window.destroy
-    )
-    quit_button.pack(side="right", padx=15, pady=15)    
-
-    submit_button = ttk.Button(
-        bottom_frame,
-        text="Valider",
-        command=lambda: calculate_score()
-    )
-    submit_button.pack(side="right", padx=5, pady=15)
-
-    reset_button = ttk.Button(
-        bottom_frame,
-        text="Recommencer",
-        command=lambda: reset_quiz()
-    )
-    reset_button.pack(side="right", padx=5, pady=15)
-
-
+    quit_button = tk.Button(
+    bottom_frame,
+    text="Quitter",
+    command=window.destroy,
+    font=("Arial", 11, "bold"),
+    bg="#e74c3c",
+    fg="white",
+    activebackground="#c0392b"
+)
+    quit_button.pack(side="right", padx=15, pady=15)
 
     # choix unique par question
     choice_vars = [tk.IntVar(value=0) for _ in range(10)]
@@ -118,11 +119,19 @@ def open_reading_comprehension():
             if choice_vars[i].get() == answer
         )
 
-        result_label.config(text=f"Score: {score} / 10")
+        if score >= 8:
+            color = "#0a8f3c"
+        elif score >= 5:
+            color = "#d68910"
+        else:
+            color = "#ce2f2f"
+
+        result_label.config(
+            text=f"Score : {score}/10",
+            fg=color,
+        )
 
         show_feedback(correct_answers)
-
-        # AJOUT IMPORTANT : mise à jour du score global
         set_best_score("reading", score)
 
     def normalize_text(text):
@@ -157,20 +166,49 @@ def open_reading_comprehension():
             if isinstance(child, tk.Radiobutton):
                 child.config(text=normalize_text(child.cget("text")), fg="black")
 
+    submit_button = tk.Button(
+        bottom_frame,
+        text="Valider",
+        command=calculate_score,
+        font=("Arial", 11, "bold"),
+        bg="#4a90e2",
+        fg="white",
+        activebackground="#3b77c4",
+        activeforeground="white",
+    )
+    submit_button.pack(side="right", padx=5, pady=15)
+
+    reset_button = tk.Button(
+        bottom_frame,
+        text="Recommencer",
+        command=reset_quiz,
+        font=("Arial", 11, "bold"),
+        bg="#66bb6a",
+        fg="white",
+        activebackground="#57a85a",
+    )
+    reset_button.pack(side="right", padx=5, pady=15)
+
     # Clear any pre-selection at startup
     reset_quiz()
 
     # Pour mettre le texte
     texte = tk.Label(
-        content_frame,
-        text="Last Friday, a group of students visited the science museum in their city. They arrived at 9 a.m. with their teacher, Mr. Brown. The museum was large and full of interesting exhibits about space, animals, technology, and the human body. " \
+    content_frame,
+    text="Last Friday, a group of students visited the science museum in their city. They arrived at 9 a.m. with their teacher, Mr. Brown. The museum was large and full of interesting exhibits about space, animals, technology, and the human body. " \
         "The students first watched a short film about the planets in our solar system. They learned many facts about Mars, Jupiter, and Saturn. After that, they explored the technology section, where they could try different interactive activities. Many students enjoyed building simple robots and testing them. " \
         "At noon, the group had lunch in the museum café. Some students ate sandwiches, while others chose pasta or salads. After lunch, they attended a workshop about renewable energy. They learned how solar panels and wind turbines produce electricity. " \
         "Before leaving, the students visited the gift shop. Some bought postcards, while others bought small science kits. They returned to school at 4 p.m. Everyone agreed that the visit was both fun and educational. ",
-        font=("Arial",11),
-        wraplength=450,
-        justify="left"
-    )
+    font=("Arial", 11),
+    wraplength=650,
+    justify="left",
+    bg="white",
+    fg="#333333",
+    relief="solid",
+    bd=1,
+    padx=15,
+    pady=15
+)
     texte.pack(anchor="w", fill="x", padx=5, pady=5)
 
     #Question 1 
