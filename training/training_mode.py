@@ -8,7 +8,7 @@ from data.vocab_data import vocab
 
 def open_training_mode():
     window = tk.Toplevel()
-    window.title("Mode d'entraînement")
+    window.title("Training Mode")
     window.geometry("650x350")
     window.resizable(False, False)
     window.config(bg="#eef5ff")
@@ -16,7 +16,7 @@ def open_training_mode():
     # Titre
     title = tk.Label(
     window,
-    text="Mode d'entraînement",
+    text="Training Mode",
     font=("Comic Sans MS", 24, "bold"),
     bg="#eef5ff",
     fg="#1a3c7a"
@@ -72,7 +72,7 @@ def open_training_mode():
     def show_translation():
         w = current.get("word")
         if not w:
-            messagebox.showinfo("Info", "Appuyez sur 'Mot suivant' pour commencer.")
+            messagebox.showinfo("Info", "Press 'Next Word' to start.")
             return
         entry = vocab.get(w)
         if entry and len(entry) >= 1:
@@ -86,7 +86,7 @@ def open_training_mode():
 
     show_btn = tk.Button(
         buttons_frame,
-        text="Afficher traduction",
+        text="Show Translation",
         command=show_translation,
         font=("Arial", 11, "bold"),
         bg="#4a90e2",
@@ -97,7 +97,7 @@ def open_training_mode():
 
     next_btn = tk.Button(
         buttons_frame,
-        text="Mot suivant",
+        text="Next Word",
         command=pick_next,
         font=("Arial", 11, "bold"),
         bg="#66bb6a",
@@ -112,7 +112,7 @@ def open_training_mode():
 
     quit_button = tk.Button(
         bottom_frame,
-        text="Quitter",
+        text="Exit",
         command=window.destroy,
         font=("Arial", 11, "bold"),
         bg="#e74c3c",
