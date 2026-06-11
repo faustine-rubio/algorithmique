@@ -15,7 +15,7 @@ BTN_RED = "#e74c3c"
 
 def open_add_word():
     window = tk.Toplevel()
-    window.title("Ajouter un mot")
+    window.title("Add Word")
     window.geometry("650x350")
     window.config(bg="#eef5ff")
     window.resizable(False, False)
@@ -23,7 +23,7 @@ def open_add_word():
     # Titre
     title = tk.Label(
     window,
-    text="Ajouter un mot",
+    text="Add Word",
     font=("Comic Sans MS", 24, "bold"),
     bg="#eef5ff",
     fg="#1a3c7a"
@@ -38,7 +38,7 @@ def open_add_word():
     content_frame.pack(padx=20, pady=10, fill="both", expand=True)
 
     # Labels et champs
-    lbl_french = tk.Label(content_frame, text="Mot français:",font=("Arial", 11, "bold"),
+    lbl_french = tk.Label(content_frame, text="French word:",font=("Arial", 11, "bold"),
 bg="#eef5ff",
 fg="#2b4c7a")
     lbl_french.grid(row=0, column=0, sticky="w", pady=4)
@@ -49,7 +49,7 @@ fg="#2b4c7a")
 )
     entry_french.grid(row=0, column=1, pady=4)
 
-    lbl_english = tk.Label(content_frame, text="Mot anglais:",font=("Arial", 11, "bold"),
+    lbl_english = tk.Label(content_frame, text="English word:",font=("Arial", 11, "bold"),
 bg="#eef5ff",
 fg="#2b4c7a")
     lbl_english.grid(row=1, column=0, sticky="w", pady=4)
@@ -60,7 +60,7 @@ fg="#2b4c7a")
 )
     entry_english.grid(row=1, column=1, pady=4)
 
-    lbl_category = tk.Label(content_frame, text="Catégorie:",font=("Arial", 11, "bold"),
+    lbl_category = tk.Label(content_frame, text="Category:",font=("Arial", 11, "bold"),
 bg="#eef5ff",
 fg="#2b4c7a")
     lbl_category.grid(row=2, column=0, sticky="w", pady=4)
@@ -79,7 +79,7 @@ fg="#2b4c7a")
         level = "basic"
 
         if not french or not english:
-            messagebox.showerror("Erreur", "Veuillez saisir le mot français et son équivalent anglais.")
+            messagebox.showerror("Error", "Please enter the French word and its English equivalent.")
             return
 
         if not category:
@@ -91,7 +91,7 @@ fg="#2b4c7a")
         # Persister via helper centralisé
         try:
             save_word_to_csv(french, english, category, level)
-            messagebox.showinfo("Succès", f"Le mot '{french}' a été ajouté et enregistré.")
+            messagebox.showinfo("Success", f"The word '{french}' has been added and saved.")
 
             # effacer les champs
             entry_french.delete(0, "end")
@@ -99,13 +99,13 @@ fg="#2b4c7a")
             entry_category.delete(0, "end")
             
         except Exception as e:
-            messagebox.showerror("Erreur", f"Impossible d'enregistrer le mot: {e}")
+            messagebox.showerror("Error", f"Unable to save the word: {e}")
     bottom_frame = tk.Frame(window)
     bottom_frame.pack(fill="x", pady=10)
 
     quit_button = tk.Button(
     bottom_frame,
-    text="Quitter",
+    text="Exit",
     command=window.destroy,
     font=("Arial",11,"bold"),
     bg="#e74c3c",
@@ -115,7 +115,7 @@ fg="#2b4c7a")
 
     validate_button = tk.Button(
     bottom_frame,
-    text="Valider",
+    text="Validate",
     command=on_validate,
     font=("Arial",11,"bold"),
     bg="#4a90e2",
