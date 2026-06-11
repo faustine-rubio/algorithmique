@@ -13,7 +13,7 @@ BTN_RED = "#e74c3c"
 
 def open_display_vocab():
     window = tk.Toplevel()
-    window.title("Afficher le vocabulaire")
+    window.title("Display Vocab")
     window.geometry("700x500")
     window.config(bg="#eef5ff")
     window.resizable(False, False)
@@ -23,7 +23,7 @@ def open_display_vocab():
     # ======================
     title = tk.Label(
     window,
-    text="Liste du vocabulaire",
+    text="Vocabulary List",
     font=("Comic Sans MS", 24, "bold"),
     bg="#eef5ff",
     fg="#1a3c7a"
@@ -103,7 +103,7 @@ def open_display_vocab():
 
     quit_button = tk.Button(
         bottom_frame,
-        text="Quitter",
+        text="Exit",
         command=window.destroy,
         font=("Arial", 11, "bold"),
         bg="#e74c3c",
