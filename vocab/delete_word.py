@@ -16,7 +16,7 @@ BTN_RED = "#e74c3c"
 
 def open_delete_word():
     window = tk.Toplevel()
-    window.title("Supprimer un mot")
+    window.title("Delete Word")
     window.geometry("650x280")
     window.config(bg="#eef5ff")
     window.resizable(False, False)
@@ -24,7 +24,7 @@ def open_delete_word():
     # Titre
     title = tk.Label(
     window,
-    text="Supprimer un mot",
+    text="Delete Word",
     font=("Comic Sans MS",24,"bold"),
     bg="#eef5ff",
     fg="#1a3c7a"
@@ -39,7 +39,7 @@ def open_delete_word():
 
     lbl_french = tk.Label(
     content_frame,
-    text="Mot français à supprimer :",
+    text="French word to delete :",
     font=("Arial",11,"bold"),
     bg="#eef5ff",
     fg="#2b4c7a"
@@ -55,16 +55,16 @@ def open_delete_word():
     def on_delete():
         french = entry_french.get().strip()
         if not french:
-            messagebox.showerror("Erreur", "Veuillez saisir le mot français à supprimer.")
+            messagebox.showerror("Error", "Please enter the French word to delete.")
             return
 
         # vérifier en mémoire
         if french not in vocab:
-            messagebox.showerror("Erreur", f"Le mot '{french}' n'existe pas dans le vocabulaire.")
+            messagebox.showerror("Error", f"The word '{french}' does not exist in the vocabulary.")
             return
 
         # confirmation
-        confirm = messagebox.askyesno("Confirmer la suppression", f"Êtes-vous sûr de vouloir supprimer '{french}' ?")
+        confirm = messagebox.askyesno("Confirm Deletion", f"Are you sure you want to delete '{french}'?")
         if not confirm:
             return
 
@@ -82,17 +82,17 @@ def open_delete_word():
         # utiliser le helper centralisé pour supprimer
         removed = delete_word_from_csv(french, category)
         if removed:
-            messagebox.showinfo("Succès", f"Le mot '{french}' a été supprimé.")
+            messagebox.showinfo("Success", f"The word '{french}' has been deleted.")
             entry_french.delete(0, 'end')
         else:
-            messagebox.showerror("Erreur", f"Impossible de trouver et supprimer '{french}' dans les fichiers CSV.")
+            messagebox.showerror("Error", f"Unable to find and delete '{french}' in the CSV files.")
 
     bottom_frame = tk.Frame(window)
     bottom_frame.pack(fill="x", pady=8)
 
     quit_button = tk.Button(
     bottom_frame,
-    text="Quitter",
+    text="Exit",
     command=window.destroy,
     font=("Arial",11,"bold"),
     bg="#7f8c8d",
@@ -102,7 +102,7 @@ def open_delete_word():
 
     delete_button = tk.Button(
     bottom_frame,
-    text="Supprimer",
+    text="Delete",
     command=on_delete,
     font=("Arial",11,"bold"),
     bg="#e74c3c",
