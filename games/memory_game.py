@@ -25,7 +25,7 @@ def open_memory_game():
 
     if len(vocab_items) < total_pairs:
         messagebox.showerror(
-            "Jeu de mémoire",
+            "Memory",
             f"Pas assez de mots dans le vocabulaire pour lancer le jeu ({total_pairs} paires requises)."
         )
         return
@@ -42,14 +42,14 @@ def open_memory_game():
 
     window = tk.Toplevel()
     window.title("Memory Game")
-    window.geometry("700x650")
+    window.geometry("500x450")
     window.resizable(False, False)
     window.config(bg="#eef5ff")
 
 
     title = tk.Label(
         window,
-        text="Jeu de mémoire",
+        text="Memory",
         font=("Comic Sans MS", 24, "bold"),
         bg="#eef5ff",
         fg="#1a3c7a"
