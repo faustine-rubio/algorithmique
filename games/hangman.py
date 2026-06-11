@@ -7,7 +7,7 @@ from scores.scores import set_best_score
 
 def open_hangman():
     window = tk.Tk()
-    window.title("Jeu du pendu")
+    window.title("Hangman")
     window.geometry("700x460")
     window.resizable(False, False)
     window.config(bg="#eef5ff")
@@ -149,7 +149,7 @@ def open_hangman():
         status_label.config(fg="#1a3c7a")
         refresh_interface("Nouvelle partie prête !")
 
-    title = tk.Label(window, text="Jeu du pendu", font=("Comic Sans MS", 24, "bold"), bg="#eef5ff", fg="#1a3c7a")
+    title = tk.Label(window, text="Hangman", font=("Comic Sans MS", 24, "bold"), bg="#eef5ff", fg="#1a3c7a")
     title.place(x=280, y=10)
 
     canvas = tk.Canvas(window, width=260, height=320, bg="#d8e9ff", highlightthickness=0)
