@@ -152,10 +152,17 @@ def open_quiz():
     )
     quit_button.pack(side="left", padx=6)
 
+    def on_enter(event):
+        verifier_reponse()
+
+    window.bind("<Return>", on_enter)
+
     afficher_question()
 
     if own_root:
         window.mainloop()
+
+
 
 
 if __name__ == "__main__":
