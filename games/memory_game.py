@@ -96,8 +96,8 @@ def open_memory_game():
             window.event_generate("<<BestScoreChanged>>")
 
             messagebox.showinfo(
-                "Victoire",
-                f"Bravo ! Vous avez gagné en {moves} coups.\nScore : {score}",
+                "Victory",
+                f"Congratulations! You won in {moves} moves.\nScore : {score}",
                 parent=window
             )
 
@@ -122,7 +122,7 @@ def open_memory_game():
 
     moves_label = tk.Label(
         status_frame,
-        text="Coups :",
+        text="Moves :",
         font=("Arial", 12, "bold"),
         bg="#eef5ff",
         fg="#2b4c7a"
@@ -151,7 +151,7 @@ def open_memory_game():
 
     quit_button = ttk.Button(
         bottom_frame,
-        text="Quitter",
+        text="Exit",
         command=window.destroy
     )
     quit_button.pack(side="right")
