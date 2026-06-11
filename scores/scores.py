@@ -5,7 +5,7 @@ from tkinter import ttk
 
 # ==========================
 # Fichier de sauvegarde
-# ==========================
+# ==========================    
 SCORES_FILE = os.path.join(
     os.path.dirname(__file__),
     "best_scores.json"
@@ -82,45 +82,64 @@ def open_scores():
 
     window = tk.Toplevel()
     window.title("Scores")
-    window.geometry("500x350")
+    window.geometry("600x400")
     window.resizable(False, False)
+    window.config(bg="#eef5ff")
 
     title = tk.Label(
-        window,
-        text="🏆 Meilleurs scores",
-        font=("Arial", 18, "bold")
-    )
+    window,
+    text="🏆 Best Scores",
+    font=("Comic Sans MS", 24, "bold"),
+    bg="#eef5ff",
+    fg="#1a3c7a"
+)
     title.pack(pady=20)
 
-    frame = tk.Frame(window)
+    frame = tk.Frame(window, bg="#eef5ff")
     frame.pack(pady=10)
 
     labels = {
         "quiz": "Quiz",
-        "hangman": "Pendu",
+        "hangman": "Hangman",
         "memory": "Memory",
-        "reverse": "Traduction inversée",
-        "reading": "Compréhension écrite"
+        "reverse": "Reverse Translation",
+        "reading": "Reading Comprehension"
     }
 
     for key, name in labels.items():
-        row = tk.Frame(frame)
-        row.pack(fill="x", pady=5)
+        card = tk.Frame(
+            frame,
+            bg="white",
+            highlightbackground="#E5E7EB",
+            highlightthickness=1,
+        )
+        card.pack(fill="x", pady=6, padx=10)
 
         tk.Label(
-            row,
+            card,
             text=name,
-            font=("Arial", 11)
-        ).pack(side="left", padx=10)
+            font=("Arial", 11, "bold"),
+            bg="white",
+            fg="#1a3c7a",
+        ).pack(side="left", padx=12, pady=8)
 
         tk.Label(
-            row,
+            card,
             text=str(scores.get(key, 0)),
-            font=("Arial", 11, "bold")
-        ).pack(side="right", padx=10)
+            font=("Arial", 12, "bold"),
+            bg="white",
+            fg="#2563EB",
+        ).pack(side="right", padx=12)
 
-    ttk.Button(
+    close_button = tk.Button(
         window,
-        text="Fermer",
-        command=window.destroy
-    ).pack(pady=25)
+        text="Close",
+        command=window.destroy,
+        font=("Arial", 11, "bold"),
+        bg="#e74c3c",
+        fg="white",
+        activebackground="#c0392b",
+        relief="flat",
+        cursor="hand2",
+    )
+    close_button.pack(pady=20)
