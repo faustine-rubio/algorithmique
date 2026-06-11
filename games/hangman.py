@@ -75,13 +75,13 @@ def open_hangman():
 
     def refresh_interface(message=""):
         word_label.config(text=get_affichage())
-        attempts_label.config(text=f"Tentatives restantes : {tentatives.get()}")
-        letters_label.config(text=f"Lettres proposées : {' '.join(sorted(lettres_trouvees))}")
+        attempts_label.config(text=f"Remaining Attempts : {tentatives.get()}")
+        letters_label.config(text=f"Suggested letters : {' '.join(sorted(lettres_trouvees))}")
         status_label.config(text=message)
         draw_hangman()
 
         if "_" not in get_affichage():
-            status_label.config(text=">>> Gagné ! <<<", fg="#0a8f3c")
+            status_label.config(text=">>> Won ! <<<", fg="#0a8f3c")
             guess_button.config(state="disabled")
             letter_entry.config(state="disabled")
             try:
@@ -95,9 +95,9 @@ def open_hangman():
             # montrer aussi la traduction française si disponible
             french = words.get(solution, "")
             if french:
-                status_label.config(text=f"Perdu... Le mot était '{solution}' ({french}).", fg="#ce2f2f")
+                status_label.config(text=f"Lost... The word was '{solution}' ({french}).", fg="#ce2f2f")
             else:
-                status_label.config(text=f"Perdu... Le mot était '{solution}'.", fg="#ce2f2f")
+                status_label.config(text=f"Lost... The word was '{solution}'.", fg="#ce2f2f")
             guess_button.config(state="disabled")
             letter_entry.config(state="disabled")
         # afficher la traduction si il ne reste qu'une tentative et que le mot n'est pas trouvé
@@ -105,7 +105,7 @@ def open_hangman():
             if tentatives.get() == 1 and "_" in get_affichage():
                 french = words.get(solution, "")
                 if french:
-                    hint_label.config(text=f"Traduction : {french}")
+                    hint_label.config(text=f"Translation : {french}")
                 else:
                     hint_label.config(text="")
             else:
@@ -127,12 +127,12 @@ def open_hangman():
             refresh_interface("Veuillez entrer une lettre.")
             return
         if lettre in lettres_trouvees:
-            refresh_interface("Lettre déjà proposée.")
+            refresh_interface("Lettre already proposed.")
             return
 
         lettres_trouvees.add(lettre)
         if lettre in solution:
-            refresh_interface("Bien joué !")
+            refresh_interface("Good job!")
         else:
             erreurs.set(erreurs.get() + 1)
             tentatives.set(max(0, 7 - erreurs.get()))
@@ -175,16 +175,16 @@ def open_hangman():
     letter_entry.place(x=330, y=300)
     letter_entry.focus()
 
-    guess_button = tk.Button(window, text="Proposer", command=proposer_lettre, font=("Arial", 11, "bold"), bg="#4a90e2", fg="white", activebackground="#3b77c4", activeforeground="white")
+    guess_button = tk.Button(window, text="Suggest", command=proposer_lettre, font=("Arial", 11, "bold"), bg="#4a90e2", fg="white", activebackground="#3b77c4", activeforeground="white")
     guess_button.place(x=420, y=298, width=120, height=38)
 
-    restart_button = tk.Button(window, text="Nouvelle partie", command=nouvelle_partie, font=("Arial", 11, "bold"), bg="#66bb6a", fg="white", activebackground="#57a85a")
+    restart_button = tk.Button(window, text="New Game", command=nouvelle_partie, font=("Arial", 11, "bold"), bg="#66bb6a", fg="white", activebackground="#57a85a")
     restart_button.place(x=280, y=350, width=130, height=40)
 
-    quit_button = tk.Button(window, text="Quitter", command=window.destroy, font=("Arial", 11, "bold"), bg="#e74c3c", fg="white", activebackground="#c0392b")
+    quit_button = tk.Button(window, text="Exit", command=window.destroy, font=("Arial", 11, "bold"), bg="#e74c3c", fg="white", activebackground="#c0392b")
     quit_button.place(x=430, y=350, width=130, height=40)
 
-    refresh_interface("Bonne chance !")
+    refresh_interface("Good luck !")
     window.bind('<Return>', proposer_lettre)
     window.mainloop()
 
@@ -194,7 +194,7 @@ def hangman():
     solution = "apple"
     lettres_trouvees = set()
 
-    print(">> Bienvenue dans le pendu <<")
+    print(">> Welcome to the Hangman <<")
 
     while tentatives > 0:
         affichage = " ".join(
@@ -202,39 +202,39 @@ def hangman():
             for lettre in solution
         )
         print(f"\nMot à deviner : {affichage}")
-        print(f"Tentatives restantes : {tentatives}")
+        print(f"Attempts remaining : {tentatives}")
 
-        proposition = input("Proposez une lettre : ").strip().lower()
+        proposition = input("Suggest a letter : ").strip().lower()
         if not proposition:
-            print("Aucune lettre saisie, recommencez.")
+            print("No letter entered, please try again.")
             continue
 
         if proposition in lettres_trouvees:
-            print("Vous avez déjà proposé cette lettre.")
+            print("You have already suggested this letter.")
             continue
 
         lettres_trouvees.add(proposition)
 
         if proposition in solution:
-            print("-> Bien vu !")
+            print("-> Good guess !")
         else:
             tentatives -= 1
-            print("-> Nope\n")
+            print("-> No\n")
 
         if all(lettre in lettres_trouvees for lettre in solution):
             affichage = " ".join(
                 lettre if lettre in lettres_trouvees else "_"
                 for lettre in solution
             )
-            print(f"\nMot à deviner : {affichage}")
-            print(">>> Gagné ! <<<")
+            print(f"\nWord to guess : {affichage}")
+            print(">>> You've won ! <<<")
             break
 
     else:
-        print("\nVous avez perdu...")
+        print("\nYou have lost...")
 
-    print("\n    * Fin de la partie *    ")
-    print("Le mot était :", solution)
+    print("\n    * End of the game *    ")
+    print("The word was :", solution)
     return affichage
 
 
