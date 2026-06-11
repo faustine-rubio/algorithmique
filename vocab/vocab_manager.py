@@ -11,7 +11,7 @@ BTN_RED = "#e74c3c"
 
 def open_vocab_manager():
     window = tk.Toplevel()
-    window.title("Gestionnaire de vocabulaire")
+    window.title("Vocab Manager")
     window.geometry("600x350")
     window.resizable(False, False)
     window.config(bg="#eef5ff")
@@ -19,7 +19,7 @@ def open_vocab_manager():
     # Titre
     title = tk.Label(
     window,
-    text="Gestionnaire de vocabulaire",
+    text="Vocab Manager",
     font=("Comic Sans MS", 24, "bold"),
     bg="#eef5ff",
     fg="#1a3c7a"
@@ -36,7 +36,7 @@ def open_vocab_manager():
 
     quit_button = tk.Button(
         bottom_frame,
-        text="Quitter",
+        text="Exit",
         command=window.destroy,
         font=("Arial", 11, "bold"),
         bg="#e74c3c",
