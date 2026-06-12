@@ -178,9 +178,9 @@ def open_reading_comprehension():
         text="Submit",
         command=calculate_score,
         font=("Arial", 11, "bold"),
-        bg="#4a90e2",
+        bg="#66bb6a",
         fg="white",
-        activebackground="#3b77c4",
+        activebackground="#57a85a",
         activeforeground="white",
     )
     submit_button.pack(side="right", padx=5, pady=15)
@@ -190,9 +190,9 @@ def open_reading_comprehension():
         text="Reset",
         command=reset_quiz,
         font=("Arial", 11, "bold"),
-        bg="#66bb6a",
+        bg="#4a90e2",
         fg="white",
-        activebackground="#57a85a",
+        activebackground="#3b77c4", 
     )
     reset_button.pack(side="right", padx=5, pady=15)
 
